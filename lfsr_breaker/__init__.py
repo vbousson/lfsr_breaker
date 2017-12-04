@@ -1,2 +1,1 @@
-def analyse():
-    return "Yes, sir !"
+from .fibonacci_lfsr import *
