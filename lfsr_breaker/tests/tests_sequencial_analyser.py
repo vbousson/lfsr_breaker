@@ -22,7 +22,6 @@ def analyseAndGetNext(seq, expected):
 
 def generateRandomLFSRTestSequence():
     L = random.randint(1,512)
-    L = 4
     mask = random.randint(1,2**L-1) | 1;
     seed = random.randint(1,2**L-1)
     print (L, mask, seed)
@@ -42,7 +41,7 @@ class TestSequence(TestCase):
         self.assertTrue(analyseAndGetNext("1"*big, "1"*big))
 
     def testRandomSequences(self):
-        for i in range(100):
+        for i in range(5):
             print ("Test {} :".format(i+1))
             known, expected = generateRandomLFSRTestSequence();
             self.assertTrue(analyseAndGetNext(known, expected))
