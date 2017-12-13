@@ -12,9 +12,6 @@ class BaseLFSR:
     def generate_n(self, n, fn=identity, list_fn=identity):
         return list_fn([fn(self.next()) for _ in range(n)])
 
-    def next(self):
-        raise NotImplementedError("Abstract")
-
     def get_period(self, output_fn=identity, list_fn=identity):
         known_states = [self.m_state]
         outputs = []
@@ -52,14 +49,9 @@ class FibonacciLFSR(BaseLFSR):
         BaseLFSR.__init__(self, seed)
         self.m_mask = mask
 
-    def isReversible(self):
-        return self.m_mask % 2 == 1
-
     def next(self):
         lsb = self.m_state % 2
-
-        def chained_xor(v): return 0 if v == 0 else (v %
-                                                     2) ^ chained_xor(v >> 1)
+        def chained_xor(v): return 0 if v == 0 else (v % 2) ^ chained_xor(v >> 1)
         new_msb = chained_xor(self.m_state & self.m_mask)
         self.m_state = (new_msb << (self.m_L - 1)) | (self.m_state >> 1)
         self.checkRange(self.m_state)
